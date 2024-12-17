@@ -8,6 +8,7 @@ type ModalProps = {
 	setData: React.Dispatch<React.SetStateAction<IHotelData | null>>;
 	handleRemoveHotel: (hotel: Hotel) => void;
 	handleAddHotel: (hotel: Hotel) => void;
+	displayHotels: Hotel[];
 };
 const HotelModal = ({
 	showModal,
@@ -15,6 +16,7 @@ const HotelModal = ({
 	setData,
 	handleAddHotel,
 	handleRemoveHotel,
+	displayHotels,
 }: ModalProps) => {
 	return (
 		<div>
@@ -38,8 +40,11 @@ const HotelModal = ({
 								<HotelCard
 									key={i}
 									hotel={hotel}
-									// hotelName={hotel.property.name}
-									// imageUrl={hotel.property.photoUrls[0]}
+									isChosen={
+										displayHotels.findIndex(
+											(item) => item.hotel_id === hotel.hotel_id
+										) > -1
+									}
 									handleAddHotel={handleAddHotel}
 									handleRemoveHotel={handleRemoveHotel}
 								/>

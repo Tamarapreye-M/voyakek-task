@@ -64,6 +64,11 @@ const Hotels = () => {
 							<HotelCard
 								key={i}
 								hotel={hotel}
+								isChosen={
+									displayHotels.findIndex(
+										(item) => item.hotel_id === hotel.hotel_id
+									) > -1
+								}
 								handleRemoveHotel={handleRemoveHotel}
 								handleAddHotel={handleAddHotel}
 							/>
@@ -84,12 +89,20 @@ const Hotels = () => {
 					)}
 
 					<HotelModal
+						displayHotels={displayHotels}
 						showModal={showModal}
 						data={data}
 						setData={setData}
 						handleAddHotel={handleAddHotel}
 						handleRemoveHotel={handleRemoveHotel}
 					/>
+
+					<button
+						className="btn px-10 bg-primary-blue text-white font-normal"
+						onClick={showModal}
+					>
+						Add Hotel
+					</button>
 				</div>
 			</div>
 		</div>

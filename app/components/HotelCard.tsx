@@ -7,11 +7,13 @@ type HotelProps = {
 	hotel: Hotel;
 	handleRemoveHotel: (hotel: Hotel) => void;
 	handleAddHotel: (hotel: Hotel) => void;
+	isChosen: boolean;
 };
 const HotelCard = ({
 	hotel,
 	handleAddHotel,
 	handleRemoveHotel,
+	isChosen,
 }: HotelProps) => {
 	return (
 		<div className="bg-white  relative mt-2">
@@ -136,13 +138,21 @@ const HotelCard = ({
 					</div>
 				</div>
 			</div>
-
-			<button
-				className=" text-red-500 h-full  bg-[#FBEAE9] px-1 text-2xl font-bold grid content-center absolute right-0 inset-y-0"
-				onClick={() => handleAddHotel(hotel)}
-			>
-				+
-			</button>
+			{!isChosen ? (
+				<button
+					className=" text-green-500 h-full  bg-green-100 px-1 text-2xl font-bold grid content-center absolute right-0 inset-y-0"
+					onClick={() => handleAddHotel(hotel)}
+				>
+					+
+				</button>
+			) : (
+				<button
+					className={` text-red-500 h-full  bg-[#FBEAE9] px-1 text-2xl font-bold grid content-center absolute right-0 inset-y-0 `}
+					onClick={() => handleRemoveHotel(hotel)}
+				>
+					x
+				</button>
+			)}
 		</div>
 	);
 };
