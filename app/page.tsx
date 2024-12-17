@@ -1,5 +1,5 @@
 import React from "react";
-import Image from "next/image";
+// import Image from "next/image";
 import DashBoard from "./Navbar/DashBoard";
 import Main from "./MainPage/Main";
 

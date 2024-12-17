@@ -1,11 +1,13 @@
 "use client";
-import React, { useEffect, useState } from "react";
+
+import React, { useState } from "react";
+// import { useEffect } from "react";
 import Image from "next/image";
 import Hotel from "../images/hotel.png";
 
-import axios from "axios";
-import client from "@/service/api";
-import { IHotel, IHotelResponse } from "@/types/hotels.type";
+// import axios from "axios";
+// import client from "@/service/api";
+// import { IHotel, IHotelResponse } from "@/types/hotels.type";
 import sampleHotelList from "@/utils/hotelsList";
 import { IHotelData } from "@/types/hotels2.type";
 import HotelCard from "../components/HotelCard";
@@ -38,7 +40,6 @@ import HotelCard from "../components/HotelCard";
 // 	console.error(error);
 // }
 
-// eslint-disable-next-line @next/next/no-async-client-component
 const Hotels = () => {
 	const [data, setData] = useState<IHotelData | null>(sampleHotelList.data);
 
@@ -70,7 +71,7 @@ const Hotels = () => {
 	// 			console.log(error);
 	// 		});
 	// }, []);
-	console.log(data);
+	console.log(data, setData);
 	return (
 		<div className=" bg-[#344054] px-5 py-8 my-5 rounded-md">
 			<div className=" font-semibold flex text-heading-black gap-1 mb-6">
