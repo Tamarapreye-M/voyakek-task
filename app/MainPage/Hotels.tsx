@@ -104,19 +104,19 @@ const Hotels = () => {
 							/>
 						))
 					) : (
-						<div>
+						<div className="flex flex-col justify-center items-center">
 							<Image src={HotelImg} alt="" />
 							<p className=" text-heading-black font-semibold">
 								No Request Yet
 							</p>
-							<button
-								className="btn px-10 bg-primary-blue text-white font-normal"
-								onClick={showModal}
-							>
-								Add Hotel
-							</button>
 						</div>
 					)}
+					<button
+						className="btn px-10 bg-primary-blue text-white font-normal"
+						onClick={showModal}
+					>
+						Add Hotel
+					</button>
 
 					<HotelModal
 						displayHotels={displayHotels}
@@ -126,13 +126,6 @@ const Hotels = () => {
 						handleAddHotel={handleAddHotel}
 						handleRemoveHotel={handleRemoveHotel}
 					/>
-
-					<button
-						className="btn px-10 bg-primary-blue text-white font-normal"
-						onClick={showModal}
-					>
-						Add Hotel
-					</button>
 				</div>
 			</div>
 		</div>
