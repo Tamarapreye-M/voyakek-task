@@ -69,16 +69,20 @@ const Hotels = () => {
 							/>
 						))
 					) : (
-						<p>No hotels selected yet.</p>
+						<div>
+							<Image src={HotelImg} alt="" />
+							<p className=" text-heading-black font-semibold">
+								No Request Yet
+							</p>
+							<button
+								className="btn px-10 bg-primary-blue text-white font-normal"
+								onClick={showModal}
+							>
+								Add Hotel
+							</button>
+						</div>
 					)}
-					<Image src={HotelImg} alt="" />
-					<p className=" text-heading-black font-semibold">No Request Yet</p>
-					<button
-						className="btn px-10 bg-primary-blue text-white font-normal"
-						onClick={showModal}
-					>
-						Add Hotel
-					</button>
+
 					<HotelModal
 						showModal={showModal}
 						data={data}
