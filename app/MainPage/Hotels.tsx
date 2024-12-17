@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 // import { useEffect } from "react";
 import Image from "next/image";
 import HotelImg from "../images/hotel.png";
 
 // import axios from "axios";
-// import client from "@/service/api";
+import client from "@/service/api";
 // import { IHotel, IHotelResponse } from "@/types/hotels.type";
 import sampleHotelList from "@/utils/hotelsList";
 import { Hotel, IHotelData } from "@/types/hotels2.type";
@@ -16,6 +16,36 @@ import HotelModal from "../components/Modal";
 const Hotels = () => {
 	const [data, setData] = useState<IHotelData | null>(sampleHotelList.data);
 	const [displayHotels, setDisplayHotels] = useState<Hotel[]>([]);
+
+	useEffect(() => {
+		client
+			.get("/hotels/searchDestination", {
+				params: {
+					dest_id: "-2017355",
+					search_type: "CITY",
+					arrival_date: new Date().toISOString().split("T")[0],
+					departure_date: "2025-01-16",
+					adults: "1",
+					children_age: "0,17",
+					room_qty: "1",
+					page_number: "1",
+					units: "metric",
+					temperature_unit: "c",
+					languagecode: "en-us",
+					currency_code: "AED",
+				},
+			})
+			.then((response) => {
+				if (response.status) {
+					setData(response.data?.data);
+				}
+				console.log(response.data);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	}, []);
+
 	const showModal = (): void => {
 		const modalElement = document.getElementById(
 			"my_modal_3"
