@@ -1,23 +1,39 @@
+import { Hotel, IHotelData } from "@/types/hotels2.type";
 import Image from "next/image";
 import React from "react";
-import testImage from "../images/Rectangle 3437.png";
+// import testImage from "../images/Rectangle 3437.png";
 
-const HotelCard = () => {
+type HotelProps = {
+	hotel: Hotel;
+	handleRemoveHotel: (hotel: Hotel) => void;
+	handleAddHotel: (hotel: Hotel) => void;
+};
+const HotelCard = ({
+	hotel,
+	handleAddHotel,
+	handleRemoveHotel,
+}: HotelProps) => {
 	return (
-		<div className="bg-white  relative">
+		<div className="bg-white  relative mt-2">
 			<div className=" flex py-5 pl-5 w-[98%]">
 				<div>
-					<Image src={testImage} alt="/" />
+					<Image
+						src={hotel.property.photoUrls[0]}
+						alt="/"
+						width={250}
+						height={200}
+						className=" rounded-md h-full"
+					/>
 				</div>
 				<div className=" flex flex-col justify-between w-full">
 					<div className="flex justify-between px-3">
 						<div>
 							<h1 className=" text-heading-black text-xl font-semibold">
-								Rivera Resort Hotel, lekki
+								{hotel.property.name}
 							</h1>
 							<p className="text-heading-black text-md w-2/3">
-								Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-								Soluta, ea.
+								18, Kenneth Agbakuru Street, Off Access Bank Admiralty Way,
+								Lagos State
 							</p>
 							<div className="flex gap-3 mt-2">
 								<span className=" text-primary-blue flex items-center gap-1">
@@ -70,7 +86,7 @@ const HotelCard = () => {
 						<div className="text-heading-black items-end flex flex-col">
 							<h1 className="font-bold text-3xl ">N123.456</h1>
 							<p>Total Price: N560,000</p>
-							<p>1 room x 10 nights incl. taxes</p>
+							<p className=" text-xs">1 room x 10 nights incl. taxes</p>
 						</div>
 					</div>
 
@@ -121,9 +137,12 @@ const HotelCard = () => {
 				</div>
 			</div>
 
-			<div className=" text-red-500 h-full  bg-[#FBEAE9] px-1 text-2xl font-bold grid content-center absolute right-0 inset-y-0">
-				x
-			</div>
+			<button
+				className=" text-red-500 h-full  bg-[#FBEAE9] px-1 text-2xl font-bold grid content-center absolute right-0 inset-y-0"
+				onClick={() => handleAddHotel(hotel)}
+			>
+				+
+			</button>
 		</div>
 	);
 };

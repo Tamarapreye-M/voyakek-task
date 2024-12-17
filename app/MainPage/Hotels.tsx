@@ -3,74 +3,41 @@
 import React, { useState } from "react";
 // import { useEffect } from "react";
 import Image from "next/image";
-import Hotel from "../images/hotel.png";
+import HotelImg from "../images/hotel.png";
 
 // import axios from "axios";
 // import client from "@/service/api";
 // import { IHotel, IHotelResponse } from "@/types/hotels.type";
 import sampleHotelList from "@/utils/hotelsList";
-import { IHotelData } from "@/types/hotels2.type";
+import { Hotel, IHotelData } from "@/types/hotels2.type";
 import HotelCard from "../components/HotelCard";
-
-// const options = {
-// 	method: "GET",
-// 	url: "https://booking-com15.p.rapidapi.com/api/v1/hotels/searchHotels",
-// 	params: {
-// 		dest_id: "-2092174",
-// 		search_type: "CITY",
-// 		adults: "1",
-// 		children_age: "0,17",
-// 		room_qty: "1",
-// 		page_number: "1",
-// 		units: "metric",
-// 		temperature_unit: "c",
-// 		languagecode: "en-us",
-// 		currency_code: "AED",
-// 	},
-// 	headers: {
-// 		"x-rapidapi-key": "b3e1d992afmshdb4d85f36bd7991p1f2afcjsn37e32d17828d",
-// 		"x-rapidapi-host": "booking-com15.p.rapidapi.com",
-// 	},
-// };
-
-// try {
-// 	const response = await axios.request(options);
-// 	console.log(response.data);
-// } catch (error) {
-// 	console.error(error);
-// }
+import HotelModal from "../components/Modal";
 
 const Hotels = () => {
 	const [data, setData] = useState<IHotelData | null>(sampleHotelList.data);
+	const [displayHotels, setDisplayHotels] = useState<Hotel[]>([]);
+	const showModal = (): void => {
+		const modalElement = document.getElementById(
+			"my_modal_3"
+		) as HTMLDialogElement | null;
+		modalElement?.showModal(); // Optional chaining in case the modal is not found
+	};
 
-	// useEffect(() => {
-	// 	client
-	// 		.get("/hotels/searchDestination", {
-	// 			params: {
-	// 				dest_id: "-2017355",
-	// 				search_type: "CITY",
-	// 				arrival_date: new Date().toISOString().split("T")[0],
-	// 				departure_date: "2025-01-16",
-	// 				adults: "1",
-	// 				children_age: "0,17",
-	// 				room_qty: "1",
-	// 				page_number: "1",
-	// 				units: "metric",
-	// 				temperature_unit: "c",
-	// 				languagecode: "en-us",
-	// 				currency_code: "AED",
-	// 			},
-	// 		})
-	// 		.then((response) => {
-	// 			if (response.status) {
-	// 				setData(response.data?.data);
-	// 			}
-	// 			console.log(response.data);
-	// 		})
-	// 		.catch((error) => {
-	// 			console.log(error);
-	// 		});
-	// }, []);
+	// Function to add a hotel to displayHotels
+	const handleAddHotel = (hotel: Hotel) => {
+		console.log(hotel);
+		if (!displayHotels.includes(hotel)) {
+			setDisplayHotels((prevHotels) => [...prevHotels, hotel]);
+		}
+	};
+
+	// Function to remove a hotel from displayHotels
+	const handleRemoveHotel = (hotel: Hotel) => {
+		setDisplayHotels((prevHotels) =>
+			prevHotels.filter((item) => item !== hotel)
+		);
+	};
+
 	console.log(data, setData);
 	return (
 		<div className=" bg-[#344054] px-5 py-8 my-5 rounded-md">
@@ -92,20 +59,35 @@ const Hotels = () => {
 			</div>
 			<div className="bg-white">
 				<div className="flex justify-center items-center flex-col py-12">
-					<Image src={Hotel} alt="" />
+					{displayHotels.length > 0 ? (
+						displayHotels.map((hotel, i) => (
+							<HotelCard
+								key={i}
+								hotel={hotel}
+								handleRemoveHotel={handleRemoveHotel}
+								handleAddHotel={handleAddHotel}
+							/>
+						))
+					) : (
+						<p>No hotels selected yet.</p>
+					)}
+					<Image src={HotelImg} alt="" />
 					<p className=" text-heading-black font-semibold">No Request Yet</p>
-					<button className="btn px-10 bg-primary-blue text-white font-normal">
+					<button
+						className="btn px-10 bg-primary-blue text-white font-normal"
+						onClick={showModal}
+					>
 						Add Hotel
 					</button>
+					<HotelModal
+						showModal={showModal}
+						data={data}
+						setData={setData}
+						handleAddHotel={handleAddHotel}
+						handleRemoveHotel={handleRemoveHotel}
+					/>
 				</div>
 			</div>
-
-			<div>
-				{data?.hotels.map((item, i) => {
-					return <div key={i}>{item.property.name}</div>;
-				})}
-			</div>
-			<HotelCard />
 		</div>
 	);
 };

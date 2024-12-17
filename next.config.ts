@@ -5,6 +5,14 @@ const nextConfig: NextConfig = {
 	eslint: {
 		ignoreDuringBuilds: true,
 	},
+	images: {
+		remotePatterns: [
+			{
+				protocol: "https",
+				hostname: "cf.bstatic.com",
+			},
+		],
+	},
 };
 
 export default nextConfig;
